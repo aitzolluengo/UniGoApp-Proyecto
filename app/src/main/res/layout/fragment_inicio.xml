@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/mapa"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/contenedor_botones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_gravity="top|end"
+        android:gravity="center"
+        android:layout_marginTop="80dp">
+
+        <ImageButton
+            android:id="@+id/btn_pie"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/boton_fondo"
+            android:src="@drawable/ic_directions_walk"
+            android:contentDescription="Ruta a pie"
+            android:layout_margin="4dp"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_bici"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/boton_fondo"
+            android:src="@drawable/ic_directions_bike"
+            android:contentDescription="Ruta en bicicleta"
+            android:layout_margin="4dp"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_bus"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/boton_fondo"
+            android:src="@drawable/ic_directions_bus"
+            android:contentDescription="Ruta en autobús"
+            android:layout_margin="4dp"
+            app:tint="@android:color/white" />
+
+    </LinearLayout>
+</FrameLayout>

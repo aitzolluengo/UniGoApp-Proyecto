@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">UniGoApp</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+
+    <string name="mode_walk">Modo a pie</string>
+    <string name="mode_bike">Modo bicicleta</string>
+    <string name="mode_bus">Modo autobús</string>
+
+    <string name="google_maps_key">AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4</string>
+
+
+</resources>

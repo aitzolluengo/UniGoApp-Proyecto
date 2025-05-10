@@ -91,7 +91,9 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
             if (posicionActual != null) {
                 modoSeleccionado = "bicycling";
                 guardarModoPreferido(modoSeleccionado);
-                Toast.makeText(getContext(), "Calculando ruta en bici...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),
+                        "Ruta en bici calculada. Sigue las líneas rojas si es posible: indican los carriles bici oficiales.",
+                        Toast.LENGTH_LONG).show();
                 calcularRuta(posicionActual, campusAlava, modoSeleccionado);
             } else {
                 Toast.makeText(getContext(), "Ubicación aún no disponible", Toast.LENGTH_SHORT).show();
@@ -288,7 +290,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
         map.setMyLocationEnabled(true);
 
-        // Cargar carriles bici desde assets
         try {
             InputStream inputStream = requireContext().getAssets().open("viasciclistas23.geojson");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -307,7 +308,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
             GeoJsonLineStringStyle lineStyle = new GeoJsonLineStringStyle();
             lineStyle.setColor(Color.RED);
-
             lineStyle.setWidth(10f);
 
             for (GeoJsonFeature feature : layer.getFeatures()) {
@@ -321,10 +321,18 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getContext(), "Error al cargar vías ciclistas", Toast.LENGTH_SHORT).show();
         }
 
-
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
                 posicionActual = new LatLng(location.getLatitude(), location.getLongitude());
+
+                // AVISO si estás fuera de Vitoria-Gasteiz
+                if (posicionActual.latitude < 42.8 || posicionActual.latitude > 42.88 ||
+                        posicionActual.longitude < -2.74 || posicionActual.longitude > -2.63) {
+                    Toast.makeText(getContext(),
+                            "Estás fuera de Vitoria-Gasteiz. Esta app solo está diseñada para su uso en esta ciudad.",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionActual, 15));
             } else {
                 Toast.makeText(getContext(), "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show();

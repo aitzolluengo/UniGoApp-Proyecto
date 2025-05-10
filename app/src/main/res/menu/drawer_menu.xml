@@ -12,6 +12,11 @@
         android:title="Perfil" />
 
     <item
+        android:id="@+id/nav_bus"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Mapa bus" />
+
+    <item
         android:id="@+id/nav_info"
         android:title="Información"
         android:icon="@android:drawable/ic_menu_info_details" />

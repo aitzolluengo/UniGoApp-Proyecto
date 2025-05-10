@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.tzolas.unigoapp.fragments.BusFragment;
 import com.tzolas.unigoapp.fragments.InicioFragment;
 import com.tzolas.unigoapp.fragments.AjustesFragment; // 👈 Asegúrate de tener este import correcto
 import com.tzolas.unigoapp.fragments.InfoFragment;
@@ -70,7 +71,14 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.content_frame, new InfoFragment())
                         .commit();
                 toolbar.setTitle("Información");
+            }else if (id == R.id.nav_bus) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new BusFragment())
+                        .commit();
+                toolbar.setTitle("Paradas de bus");
             }
+
 
 
             drawerLayout.closeDrawers();

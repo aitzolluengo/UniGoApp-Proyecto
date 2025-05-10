@@ -1,0 +1,440 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6844,
+          42.859
+        ]
+      },
+      "properties": {
+        "stop_id": "1",
+        "stop_name": "VITORIA-GASTEIZ (Estación Bus Geltokia)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6815,
+          42.8478
+        ]
+      },
+      "properties": {
+        "stop_id": "53",
+        "stop_name": "VITORIA-GASTEIZ (Bastiturri)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6818,
+          42.8475
+        ]
+      },
+      "properties": {
+        "stop_id": "54",
+        "stop_name": "VITORIA-GASTEIZ (Bastiturri)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6823,
+          42.844
+        ]
+      },
+      "properties": {
+        "stop_id": "55",
+        "stop_name": "VITORIA-GASTEIZ (Epaitegiak/Juzgados)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6825,
+          42.8445
+        ]
+      },
+      "properties": {
+        "stop_id": "56",
+        "stop_name": "VITORIA-GASTEIZ (Epaitegiak/Juzgados)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6751,
+          42.8386
+        ]
+      },
+      "properties": {
+        "stop_id": "57",
+        "stop_name": "VITORIA-GASTEIZ (Unibertsitatea/Universidad)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6751,
+          42.8386
+        ]
+      },
+      "properties": {
+        "stop_id": "58",
+        "stop_name": "VITORIA-GASTEIZ (Unibertsitatea/Universidad)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6901,
+          42.8399
+        ]
+      },
+      "properties": {
+        "stop_id": "67",
+        "stop_name": "VITORIA-GASTEIZ(Gaztelako atea 67-80 /Portal de Castilla 67-80)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6912,
+          42.8397
+        ]
+      },
+      "properties": {
+        "stop_id": "68",
+        "stop_name": "VITORIA-GASTEIZ(Gaztelako atea 67-80 /Portal de Castilla 67-80)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6631,
+          42.8599
+        ]
+      },
+      "properties": {
+        "stop_id": "208",
+        "stop_name": "VITORIA-GASTEIZ (Alas-Boulevard)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6624,
+          42.859
+        ]
+      },
+      "properties": {
+        "stop_id": "209",
+        "stop_name": "VITORIA-GASTEIZ (Alas-Boulevard)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5696,
+          42.8308
+        ]
+      },
+      "properties": {
+        "stop_id": "260",
+        "stop_name": "ANDOLLU",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5694,
+          42.8305
+        ]
+      },
+      "properties": {
+        "stop_id": "261",
+        "stop_name": "ANDOLLU",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5858,
+          42.8388
+        ]
+      },
+      "properties": {
+        "stop_id": "265",
+        "stop_name": "ARGANDOÑA",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6262,
+          42.8539
+        ]
+      },
+      "properties": {
+        "stop_id": "349",
+        "stop_name": "ARCAUTE / ARKAUTI (Nekazaritza Institutua/Instituto Agrario)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6341,
+          42.8524
+        ]
+      },
+      "properties": {
+        "stop_id": "350",
+        "stop_name": "ARCAUTE / ARKAUTI",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6339,
+          42.8523
+        ]
+      },
+      "properties": {
+        "stop_id": "351",
+        "stop_name": "ARCAUTE / ARKAUTI",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5602,
+          42.8542
+        ]
+      },
+      "properties": {
+        "stop_id": "364",
+        "stop_name": "OREITIA",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5611,
+          42.8541
+        ]
+      },
+      "properties": {
+        "stop_id": "365",
+        "stop_name": "OREITIA",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6573,
+          42.8528
+        ]
+      },
+      "properties": {
+        "stop_id": "370",
+        "stop_name": "VITORIA-GASTEIZ (Madrid-Arantzabela)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6576,
+          42.8524
+        ]
+      },
+      "properties": {
+        "stop_id": "371",
+        "stop_name": "VITORIA-GASTEIZ (Madrid-Arantzabela)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5992,
+          42.8597
+        ]
+      },
+      "properties": {
+        "stop_id": "386",
+        "stop_name": "ILARRATZA",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5977,
+          42.8593
+        ]
+      },
+      "properties": {
+        "stop_id": "387",
+        "stop_name": "ILARRATZA",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5787,
+          42.8617
+        ]
+      },
+      "properties": {
+        "stop_id": "390",
+        "stop_name": "MATAUKO",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5785,
+          42.8616
+        ]
+      },
+      "properties": {
+        "stop_id": "391",
+        "stop_name": "MATAUKO",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6595,
+          42.8691
+        ]
+      },
+      "properties": {
+        "stop_id": "466",
+        "stop_name": "VITORIA-GASTEIZ (Gamarrako atea 17-46 /P. Gamarra)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6594,
+          42.8685
+        ]
+      },
+      "properties": {
+        "stop_id": "467",
+        "stop_name": "VITORIA-GASTEIZ (Gamarrako atea 17-46 /P. Gamarra)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6464,
+          42.8737
+        ]
+      },
+      "properties": {
+        "stop_id": "546",
+        "stop_name": "VITORIA-GASTEIZ (Gamarrako atea 1 -Deba/Portal de Gamarra 1 -Deba)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.6179,
+          42.8571
+        ]
+      },
+      "properties": {
+        "stop_id": "799",
+        "stop_name": "ARCAUTE / ARKAUTI (Akademia/Academia)",
+        "stop_desc": "VITORIA-GASTEIZ"
+      }
+    }
+  ]
+}

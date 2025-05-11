@@ -30,9 +30,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <receiver
+            android:name=".widgets.UniGoWidget"
+            android:label="UniGo Widget"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_unigo_info" />
+        </receiver>
+
+
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4" />
     </application>
+
+
+
 
 </manifest>

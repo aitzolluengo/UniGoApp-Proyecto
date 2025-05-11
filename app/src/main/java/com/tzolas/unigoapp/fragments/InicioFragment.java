@@ -442,7 +442,15 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
                 posicionActual = new LatLng(location.getLatitude(), location.getLongitude());
+
+                Bundle args = getArguments();
+                if (args != null && args.getBoolean("calcular_ruta", false)) {
+                    modoSeleccionado = cargarModoPreferido();
+                    calcularRuta(posicionActual, campusAlava, modoSeleccionado);
+                    Toast.makeText(getContext(), "Ruta automática desde widget", Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
     }
 

@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle("Perfil");
 
             }else if (id == R.id.nav_ajustes) {
-                    startActivity(new Intent(this, SettingsActivity.class));
+                startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {
                 showMessage("Sesión cerrada");
@@ -94,12 +94,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Mostrar InicioFragment por defecto al arrancar
         if (savedInstanceState == null) {
+            boolean desdeWidget = getIntent().getBooleanExtra("calcular_ruta", false);
+            Bundle args = new Bundle();
+            args.putBoolean("calcular_ruta", desdeWidget);
+
+            InicioFragment inicioFragment = new InicioFragment();
+            inicioFragment.setArguments(args);
+
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content_frame, new InicioFragment())
+                    .replace(R.id.content_frame, inicioFragment)
                     .commit();
             toolbar.setTitle("Inicio");
         }
+
     }
 
     private void showMessage(String msg) {

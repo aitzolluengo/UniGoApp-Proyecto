@@ -3,6 +3,7 @@ package com.tzolas.unigoapp.fragments;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -12,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -30,12 +33,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tzolas.unigoapp.R;
 import com.google.maps.android.data.geojson.GeoJsonFeature;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 import com.google.maps.android.data.geojson.GeoJsonLineStringStyle;
-import com.tzolas.unigoapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -53,12 +59,15 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
-    private ImageButton btnPie, btnBici, btnBus;
+    private FloatingActionButton fabTransporte;
+    private CardView cardBienvenida;
     private Polyline currentPolyline;
     private LatLng posicionActual;
     private String modoSeleccionado;
 
-    private final LatLng campusAlava = new LatLng(42.8467, -2.6723);
+    private boolean isFabRotated = false;
+
+    private final LatLng campusAlava = new LatLng(42.83988450929749, -2.669759213327361);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,56 +75,172 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.mapa);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        fabTransporte = rootView.findViewById(R.id.fab_transporte);
+        cardBienvenida = rootView.findViewById(R.id.card_bienvenida);
 
-        btnPie = rootView.findViewById(R.id.btn_pie);
-        btnBici = rootView.findViewById(R.id.btn_bici);
-        btnBus = rootView.findViewById(R.id.btn_bus);
+        // Botón "Ir andando al campus"
+        Button btnIrAndando = rootView.findViewById(R.id.btn_ir_andando);
+        btnIrAndando.setOnClickListener(v -> {
+            if (cardBienvenida.getVisibility() == View.VISIBLE) {
+                cardBienvenida.setVisibility(View.GONE);
+            }
 
-        btnPie.setOnClickListener(v -> {
             if (posicionActual != null) {
                 modoSeleccionado = "walking";
                 guardarModoPreferido(modoSeleccionado);
                 Toast.makeText(getContext(), "Calculando ruta a pie...", Toast.LENGTH_SHORT).show();
                 calcularRuta(posicionActual, campusAlava, modoSeleccionado);
             } else {
-                Toast.makeText(getContext(), "Ubicación aún no disponible", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Esperando a obtener tu ubicación...", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btnBici.setOnClickListener(v -> {
+        fabTransporte.setOnClickListener(v -> {
+            mostrarBottomSheet();
+            if (!isFabRotated) {
+                rotateFabOpen();
+            } else {
+                rotateFabClose();
+            }
+            isFabRotated = !isFabRotated;
+        });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.mapa);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
+        crearCanalNotificaciones();
+        pedirPermisoNotificaciones();
+        modoSeleccionado = cargarModoPreferido();
+        return rootView;
+    }
+
+    private void mostrarBottomSheet() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        View sheetView = getLayoutInflater().inflate(R.layout.bottomsheet_transporte, null);
+        dialog.setContentView(sheetView);
+
+        sheetView.findViewById(R.id.opcion_andar).setOnClickListener(v -> {
+            if (cardBienvenida.getVisibility() == View.VISIBLE) {
+                cardBienvenida.setVisibility(View.GONE);
+            }
+
+            if (posicionActual != null) {
+                modoSeleccionado = "walking";
+                guardarModoPreferido(modoSeleccionado);
+                Toast.makeText(getContext(), "Calculando ruta a pie...", Toast.LENGTH_SHORT).show();
+                calcularRuta(posicionActual, campusAlava, modoSeleccionado);
+            }
+
+            if (isFabRotated) {
+                rotateFabClose();
+                isFabRotated = false;
+            }
+            dialog.dismiss();
+        });
+
+        sheetView.findViewById(R.id.opcion_bici).setOnClickListener(v -> {
+            if (cardBienvenida.getVisibility() == View.VISIBLE) {
+                cardBienvenida.setVisibility(View.GONE);
+            }
+
             if (posicionActual != null) {
                 modoSeleccionado = "bicycling";
                 guardarModoPreferido(modoSeleccionado);
-                Toast.makeText(getContext(),
-                        "Ruta en bici calculada. Sigue las líneas rojas si es posible: indican los carriles bici oficiales.",
-                        Toast.LENGTH_LONG).show();
+                cargarBidegorris();
+                mostrarDialogoBidegorri(); // Mostrar el diálogo visual
                 calcularRuta(posicionActual, campusAlava, modoSeleccionado);
-            } else {
-                Toast.makeText(getContext(), "Ubicación aún no disponible", Toast.LENGTH_SHORT).show();
             }
+
+            if (isFabRotated) {
+                rotateFabClose();
+                isFabRotated = false;
+            }
+            dialog.dismiss();
         });
 
-        btnBus.setOnClickListener(v -> {
+        sheetView.findViewById(R.id.opcion_bus).setOnClickListener(v -> {
+            if (cardBienvenida.getVisibility() == View.VISIBLE) {
+                cardBienvenida.setVisibility(View.GONE);
+            }
+
             if (posicionActual != null) {
                 modoSeleccionado = "transit";
                 guardarModoPreferido(modoSeleccionado);
                 Toast.makeText(getContext(), "Calculando ruta en autobús...", Toast.LENGTH_SHORT).show();
                 calcularRuta(posicionActual, campusAlava, modoSeleccionado);
-            } else {
-                Toast.makeText(getContext(), "Ubicación aún no disponible", Toast.LENGTH_SHORT).show();
+            }
+
+            if (isFabRotated) {
+                rotateFabClose();
+                isFabRotated = false;
+            }
+            dialog.dismiss();
+        });
+
+        dialog.setOnDismissListener(dialogInterface -> {
+            if (isFabRotated) {
+                rotateFabClose();
+                isFabRotated = false;
             }
         });
 
-        crearCanalNotificaciones();
-        pedirPermisoNotificaciones();
+        dialog.show();
+    }
 
-        modoSeleccionado = cargarModoPreferido();
-        return rootView;
+    private void mostrarDialogoBidegorri() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bidegorri, null);
+
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setPositiveButton("Entendido", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    private void rotateFabOpen() {
+        fabTransporte.animate().rotation(45f).setDuration(200).start();
+    }
+
+    private void rotateFabClose() {
+        fabTransporte.animate().rotation(0f).setDuration(200).start();
+    }
+
+    private void cargarBidegorris() {
+        try {
+            InputStream inputStream = requireContext().getAssets().open("viasciclistas23.geojson");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder builder = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+
+            reader.close();
+            inputStream.close();
+
+            JSONObject json = new JSONObject(builder.toString());
+            GeoJsonLayer layer = new GeoJsonLayer(map, json);
+
+            GeoJsonLineStringStyle lineStyle = new GeoJsonLineStringStyle();
+            lineStyle.setColor(Color.parseColor("#FF4444")); // rojo más brillante
+            lineStyle.setWidth(10f);
+            lineStyle.setZIndex(1000); // que esté por encima de todo
+
+
+            for (GeoJsonFeature feature : layer.getFeatures()) {
+                feature.setLineStringStyle(lineStyle);
+            }
+
+            layer.addLayerToMap();
+            Log.d("GeoJSON", "Carriles bici cargados desde assets.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error al cargar vías ciclistas", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void calcularRuta(LatLng origen, LatLng destino, String modo) {
@@ -280,6 +405,22 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
+        SharedPreferences prefs = requireContext().getSharedPreferences("prefs_unigo", 0);
+        boolean modoOscuro = prefs.getBoolean("modo_oscuro", false);
+
+        if (modoOscuro) {
+            try {
+                boolean success = map.setMapStyle(
+                        com.google.android.gms.maps.model.MapStyleOptions.loadRawResourceStyle(
+                                requireContext(), R.raw.map_style_dark));
+                if (!success) {
+                    Log.e("MapStyle", "Fallo al aplicar estilo oscuro al mapa.");
+                }
+            } catch (Exception e) {
+                Log.e("MapStyle", "No se pudo cargar el estilo oscuro: ", e);
+            }
+        }
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -290,52 +431,17 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
         map.setMyLocationEnabled(true);
 
-        try {
-            InputStream inputStream = requireContext().getAssets().open("viasciclistas23.geojson");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder builder = new StringBuilder();
-            String line;
+        // Añadir marcador al campus de Álava
+        map.addMarker(new MarkerOptions()
+                .position(campusAlava)
+                .title("Campus de Álava - EHU")
+                .snippet("Destino principal"));
 
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-
-            reader.close();
-            inputStream.close();
-
-            JSONObject json = new JSONObject(builder.toString());
-            GeoJsonLayer layer = new GeoJsonLayer(map, json);
-
-            GeoJsonLineStringStyle lineStyle = new GeoJsonLineStringStyle();
-            lineStyle.setColor(Color.RED);
-            lineStyle.setWidth(10f);
-
-            for (GeoJsonFeature feature : layer.getFeatures()) {
-                feature.setLineStringStyle(lineStyle);
-            }
-
-            layer.addLayerToMap();
-            Log.d("GeoJSON", "Carriles bici cargados desde assets.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Error al cargar vías ciclistas", Toast.LENGTH_SHORT).show();
-        }
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(campusAlava, 14));
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
                 posicionActual = new LatLng(location.getLatitude(), location.getLongitude());
-
-                // AVISO si estás fuera de Vitoria-Gasteiz
-                if (posicionActual.latitude < 42.8 || posicionActual.latitude > 42.88 ||
-                        posicionActual.longitude < -2.74 || posicionActual.longitude > -2.63) {
-                    Toast.makeText(getContext(),
-                            "Estás fuera de Vitoria-Gasteiz. Esta app solo está diseñada para su uso en esta ciudad.",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionActual, 15));
-            } else {
-                Toast.makeText(getContext(), "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show();
             }
         });
     }

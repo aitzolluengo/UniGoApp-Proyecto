@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_bike_red"
+        android:contentDescription="Carriles bici"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/texto_dialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Se ha calculado una ruta en bici según Google Maps.\n\nLos carriles bici están marcados en rojo.\nÚsalos siempre que sea posible para una ruta más segura."
+        android:textColor="@color/text_dialog"
+        android:textSize="16sp" />
+</LinearLayout>

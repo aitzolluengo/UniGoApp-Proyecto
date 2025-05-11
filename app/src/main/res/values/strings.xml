@@ -8,6 +8,16 @@
     <string name="mode_bus">Modo autobús</string>
 
     <string name="google_maps_key">AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4</string>
+    <string name="selecciona_un_modo_de_transporte">Selecciona un modo de transporte</string>
+    <string name="a_pie">A pie</string>
+    <string name="unigo_app">UniGo App</string>
+    <string name="seleccionar_transporte">Seleccionar transporte</string>
+    <string name="bienvenido_a_unigo_nte_ayudamos_a_llegar_al_campus_de_lava_desde_cualquier_punto_de_vitoria_gasteiz">📍 Bienvenido a UniGo\nTe ayudamos a llegar al campus de Álava desde cualquier punto de Vitoria-Gasteiz.</string>
+    <string name="carriles_bici">Carriles bici</string>
+    <string name="modo_oscuro">Modo oscuro</string>
+    <string name="borrar_preferencias">Borrar preferencias</string>
+    <string name="modo_preferido">Modo preferido:</string>
+    <string name="ver_l_neas_al_campus">Ver líneas al campus</string>
 
 
 </resources>

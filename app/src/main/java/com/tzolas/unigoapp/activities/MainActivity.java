@@ -1,17 +1,20 @@
-package com.tzolas.unigoapp;
+package com.tzolas.unigoapp.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.tzolas.unigoapp.R;
 import com.tzolas.unigoapp.fragments.BusFragment;
 import com.tzolas.unigoapp.fragments.InicioFragment;
-import com.tzolas.unigoapp.fragments.AjustesFragment; // 👈 Asegúrate de tener este import correcto
 import com.tzolas.unigoapp.fragments.InfoFragment;
 
 
@@ -23,8 +26,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences prefs = getSharedPreferences("prefs_unigo", MODE_PRIVATE);
+        boolean oscuro = prefs.getBoolean("modo_oscuro", false); // ← por defecto: false (modo claro)
+        AppCompatDelegate.setDefaultNightMode(
+                oscuro ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
+        );
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -54,13 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 showMessage("Perfil");
                 toolbar.setTitle("Perfil");
 
-            } else if (id == R.id.nav_ajustes) {
-                // ✅ Reemplazamos el fragmento de ajustes correctamente
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.content_frame, new AjustesFragment())
-                        .commit();
-                toolbar.setTitle("Ajustes");
+            }else if (id == R.id.nav_ajustes) {
+                    startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {
                 showMessage("Sesión cerrada");

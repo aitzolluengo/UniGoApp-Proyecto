@@ -24,6 +24,7 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+
             <TextView
                 android:id="@+id/texto_bienvenida"
                 android:layout_width="match_parent"
@@ -44,6 +45,14 @@
                 android:backgroundTint="@color/fab_acento"
                 android:elevation="4dp"
                 android:layout_gravity="center_horizontal" />
+            <Button
+                android:id="@+id/btn_ver_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Ver perfil"
+                android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

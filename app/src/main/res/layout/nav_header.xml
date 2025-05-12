@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:background="@color/primary"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:orientation="vertical"
-    android:background="@color/primary"
     android:padding="16dp"
-    android:gravity="bottom">
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
+
+    <ImageView
+        android:id="@+id/nav_header_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_user"
+        android:contentDescription="Foto de perfil"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_circle_button"
+        android:padding="4dp" />
 
     <TextView
-        android:id="@+id/nav_header_title"
+        android:id="@+id/nav_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/unigo_app"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:text="Nombre del usuario"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
 </LinearLayout>

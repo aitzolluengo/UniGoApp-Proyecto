@@ -11,13 +11,25 @@
         android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_lineas_campus"
+        android:id="@+id/fab_desde_ubicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"
-        android:contentDescription="@string/ver_l_neas_al_campus"
-        app:srcCompat="@drawable/ic_directions_bus"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_directions_bus"
+        android:contentDescription="Buscar rutas al campus desde aquí" />
+
+
+    <!-- FAB: Cómo llegar desde aquí -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_desde_aqui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
+        android:contentDescription="@string/ruta_desde_ubicaci_n_actual"
+        app:srcCompat="@drawable/ic_directions"
         app:backgroundTint="@color/fab_acento"
         app:elevation="6dp" />
 

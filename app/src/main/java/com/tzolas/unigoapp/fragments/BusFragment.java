@@ -68,6 +68,7 @@ public class BusFragment extends Fragment implements OnMapReadyCallback {
         MaterialButton botonBuscar = rootView.findViewById(R.id.boton_paradas_cercanas);
         botonBuscar.setOnClickListener(v -> mostrarParadasCercanas());
 
+
         return rootView;
     }
 

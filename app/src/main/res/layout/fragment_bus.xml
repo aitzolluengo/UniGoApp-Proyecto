@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
+    <!-- SearchView encima del mapa -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_paradas_cercanas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔍 Ver paradas cercanas"
+        android:layout_gravity="top"
+        android:padding="16dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:backgroundTint="?attr/colorSurface"
+        android:elevation="4dp"/>
+
+
+    <!-- Mapa (detrás del SearchView) -->
     <fragment
         android:id="@+id/bus_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- FAB para ubicación -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_desde_ubicacion"
         android:layout_width="wrap_content"
@@ -18,19 +33,5 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_directions_bus"
         android:contentDescription="Buscar rutas al campus desde aquí" />
-
-
-    <!-- FAB: Cómo llegar desde aquí -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_desde_aqui"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="100dp"
-        android:contentDescription="@string/ruta_desde_ubicaci_n_actual"
-        app:srcCompat="@drawable/ic_directions"
-        app:backgroundTint="@color/fab_acento"
-        app:elevation="6dp" />
 
 </FrameLayout>

@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".notifications.NotificacionReceiver" />
 
         <receiver
             android:name=".widgets.UniGoWidget"

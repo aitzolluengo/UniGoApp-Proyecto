@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Perfil" />
+
+    <item
+        android:id="@+id/nav_bus"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Mapa bus" />
+
+    <item
+        android:id="@+id/nav_favoritos"
+        android:title="⭐ Paradas favoritas"
+        android:icon="@drawable/ic_star" />
+
+
+    <item
+        android:id="@+id/nav_info"
+        android:title="Información"
+        android:icon="@android:drawable/ic_menu_info_details" />
+
+
+    <item
+        android:id="@+id/nav_ajustes"
+        android:title="Ajustes"
+        android:icon="@drawable/ic_settings" />
+
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Cerrar sesión" />
+
+</menu>

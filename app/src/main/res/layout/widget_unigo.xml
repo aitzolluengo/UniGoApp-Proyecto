@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/texto_modo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo: "
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/boton_abrir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ir al campus"
+        android:layout_below="@id/texto_modo"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

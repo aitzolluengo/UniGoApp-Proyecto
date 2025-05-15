@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">UniGoApp</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+
+    <string name="mode_walk">Modo a pie</string>
+    <string name="mode_bike">Modo bicicleta</string>
+    <string name="mode_bus">Modo autobús</string>
+
+    <string name="google_maps_key">AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4</string>
+    <string name="selecciona_un_modo_de_transporte">Selecciona un modo de transporte</string>
+    <string name="a_pie">A pie</string>
+    <string name="unigo_app">UniGo App</string>
+    <string name="seleccionar_transporte">Seleccionar transporte</string>
+    <string name="bienvenido_a_unigo_nte_ayudamos_a_llegar_al_campus_de_lava_desde_cualquier_punto_de_vitoria_gasteiz">📍 Bienvenido a UniGo\nTe ayudamos a llegar al campus de Álava desde cualquier punto de Vitoria-Gasteiz.</string>
+    <string name="carriles_bici">Carriles bici</string>
+    <string name="modo_oscuro">Modo oscuro</string>
+    <string name="borrar_preferencias">Borrar preferencias</string>
+    <string name="modo_preferido">Modo preferido:</string>
+    <string name="ver_l_neas_al_campus">Ver líneas al campus</string>
+    <string name="paradas_cercanas_al_campus">Paradas cercanas al campus</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="registrarse">Registrarse</string>
+
+    <string name="register_title">Crear cuenta UniGo</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_confirm_password">Confirmar contraseña</string>
+    <string name="hint_age">Edad</string>
+    <string name="select_profile_picture">Seleccionar foto de perfil</string>
+    <string name="register">Registrarse</string>
+    <string name="nombre_del_usuario">Nombre del usuario</string>
+    <string name="ruta_desde_ubicaci_n_actual">Ruta desde ubicación actual</string>
+
+    <string-array name="study_options">
+        <item>Grado</item>
+        <item>Máster</item>
+        <item>Doctorado</item>
+        <item>Intercambio</item>
+    </string-array>
+
+    <string-array name="transport_options">
+        <item>Andando</item>
+        <item>Bicicleta</item>
+        <item>Autobús</item>
+        <item>Coche</item>
+    </string-array>
+
+
+
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bottomsheet_background">#121212</color>
+    <color name="primary">#388E3C</color>
+    <color name="primaryVariant">#2E7D32</color>
+    <color name="accent">#1E88E5</color>
+
+    <color name="background">#121212</color> <!-- fondo oscuro -->
+    <color name="textPrimary">#FFFFFF</color> <!-- texto blanco -->
+    <color name="background_dialog">#121212</color>
+    <color name="text_dialog">#FFFFFF</color>
+
+    <color name="card_background">#1E1E1E</color>
+
+
+
+</resources>

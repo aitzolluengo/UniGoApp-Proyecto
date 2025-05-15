@@ -4,7 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 define('DB_HOST', 'localhost');
 define('DB_USER', 'Xxbadiola002');
 define('DB_PASS', 'M11BQsUmeQ');
-define('DB_NAME', 'Xxbadiola002_unigoapp ');
+define('DB_NAME', 'Xxbadiola002_unigoapp');
 
 function connect() {
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);

@@ -15,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -25,11 +29,12 @@ import com.tzolas.unigoapp.fragments.InicioFragment;
 import com.tzolas.unigoapp.fragments.InfoFragment;
 import com.tzolas.unigoapp.utils.FavoritosManager;
 import com.tzolas.unigoapp.utils.GtfsUtils;
+import com.tzolas.unigoapp.workers.UbicacionWorker;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,15 +46,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         SharedPreferences prefs = getSharedPreferences("prefs_unigo", MODE_PRIVATE);
-        boolean oscuro = prefs.getBoolean("modo_oscuro", false); // ← por defecto: false (modo claro)
+        boolean oscuro = prefs.getBoolean("modo_oscuro", false);
         AppCompatDelegate.setDefaultNightMode(
                 oscuro ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -79,32 +82,32 @@ public class MainActivity extends AppCompatActivity {
                 showMessage("Perfil");
                 toolbar.setTitle("Perfil");
 
-            }else if (id == R.id.nav_ajustes) {
-                    startActivity(new Intent(this, SettingsActivity.class));
+            } else if (id == R.id.nav_ajustes) {
+                startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {
                 showMessage("Sesión cerrada");
                 toolbar.setTitle("UniGo App");
+
             } else if (id == R.id.nav_info) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content_frame, new InfoFragment())
                         .commit();
                 toolbar.setTitle("Información");
-            }else if (id == R.id.nav_bus) {
+
+            } else if (id == R.id.nav_bus) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content_frame, new BusFragment())
                         .commit();
                 toolbar.setTitle("Paradas de bus");
+
             } else if (id == R.id.nav_favoritos) {
-            mostrarParadasFavoritas();
-        }
+                mostrarParadasFavoritas();
+            }
 
-
-
-
-        drawerLayout.closeDrawers();
+            drawerLayout.closeDrawers();
             return true;
         });
 
@@ -116,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
             toolbar.setTitle("Inicio");
         }
+
+        // REGISTRAR EL WORKER DE UBICACIÓN (cada 30 minutos)
+        PeriodicWorkRequest workRequest =
+                new PeriodicWorkRequest.Builder(UbicacionWorker.class, 15, TimeUnit.MINUTES)
+                        .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "ActualizarParadaCercana",
+                ExistingPeriodicWorkPolicy.KEEP,
+                workRequest
+        );
     }
 
     private void mostrarParadasFavoritas() {
@@ -125,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Carga los nombres y coordenadas desde GTFS
         Map<String, LatLng> stopCoords = new HashMap<>();
         Map<String, String> stopNames = GtfsUtils.cargarStopNames(this, stopCoords);
 
@@ -150,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
             texto.setText("📍 " + nombre);
 
             paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
-                // Abrimos Maps desde MainActivity (o puedes comunicar con el fragmento)
                 String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setPackage("com.google.android.apps.maps");
@@ -163,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
 
     private void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

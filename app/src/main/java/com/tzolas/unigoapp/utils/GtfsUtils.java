@@ -131,4 +131,56 @@ public class GtfsUtils {
 
         return lineasCampus;
     }
+    public static Set<String> obtenerLineasDeParada(Context context, String stopIdObjetivo) {
+        Set<String> lineas = new HashSet<>();
+        try {
+            Map<String, String> tripToRoute = new HashMap<>();
+            Map<String, String> routeNames = new HashMap<>();
+
+            // Cargar trips.txt → trip_id → route_id
+            BufferedReader readerTrips = new BufferedReader(new InputStreamReader(context.getAssets().open("trips.txt")));
+            readerTrips.readLine();
+            String line;
+            while ((line = readerTrips.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 3) {
+                    tripToRoute.put(tokens[2], tokens[0]);
+                }
+            }
+            readerTrips.close();
+
+            // Cargar routes.txt → route_id → nombre línea
+            BufferedReader readerRoutes = new BufferedReader(new InputStreamReader(context.getAssets().open("routes.txt")));
+            readerRoutes.readLine();
+            while ((line = readerRoutes.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 3) {
+                    routeNames.put(tokens[0], tokens[2]);
+                }
+            }
+            readerRoutes.close();
+
+            // Buscar líneas por stopId
+            BufferedReader readerStopTimes = new BufferedReader(new InputStreamReader(context.getAssets().open("stop_times.txt")));
+            readerStopTimes.readLine();
+            while ((line = readerStopTimes.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 4 && tokens[3].equals(stopIdObjetivo)) {
+                    String tripId = tokens[0];
+                    String routeId = tripToRoute.getOrDefault(tripId, "");
+                    String routeName = routeNames.getOrDefault(routeId, "");
+                    if (!routeName.isEmpty()) {
+                        lineas.add(routeName);
+                    }
+                }
+            }
+            readerStopTimes.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lineas;
+    }
+
 }

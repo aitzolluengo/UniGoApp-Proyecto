@@ -2,7 +2,9 @@ package com.tzolas.unigoapp.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -112,6 +114,16 @@ public class BusFragment extends Fragment implements OnMapReadyCallback {
 
                 Set<String> lineas = lineasPorParada.getOrDefault(stopId, new HashSet<>());
                 List<String> horas = HorarioManager.obtenerProximasHorasConLinea(requireContext(), stopId);
+                SharedPreferences prefs = requireContext().getSharedPreferences("UniGoPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("ultimaParadaNombre", marker.getTitle());
+                editor.putString("ultimaParadaLineas", String.join(", ", lineas));
+                editor.putString("ultimaParadaHorarios", horas.isEmpty() ?
+                        "🕐 No hay buses disponibles hoy." :
+                        "🕐 Próximos buses:\n" + String.join("\n", horas.subList(0, Math.min(3, horas.size())))
+                );
+                editor.apply();
+
 
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.bottomsheet_lineas_paradas, null);
                 BottomSheetDialog dialog = new BottomSheetDialog(requireContext());

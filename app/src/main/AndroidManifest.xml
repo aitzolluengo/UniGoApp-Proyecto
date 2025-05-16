@@ -66,6 +66,24 @@
                 android:resource="@xml/widget_unigo_info"/>
         </receiver>
 
+        <receiver android:name=".widgets.BusWidgetProvider"
+            android:exported="true">
+
+            <intent-filter>
+                <!-- Acción por defecto para actualizar el widget -->
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+
+                <!-- Acción personalizada para el botón -->
+                <action android:name="com.tzolas.unigoapp.ACTION_ACTUALIZAR_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+
+
         <!-- API Key de Google Maps -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"

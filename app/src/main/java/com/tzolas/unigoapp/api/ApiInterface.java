@@ -1,6 +1,5 @@
 package com.tzolas.unigoapp.api;
 
-import com.tzolas.unigoapp.model.ServerResponse;
 import com.tzolas.unigoapp.model.User;
 
 import retrofit2.Call;

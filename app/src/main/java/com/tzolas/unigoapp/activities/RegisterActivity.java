@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.tzolas.unigoapp.R;
 import com.tzolas.unigoapp.api.ApiClient;
 import com.tzolas.unigoapp.api.ApiInterface;
+import com.tzolas.unigoapp.model.ServerResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

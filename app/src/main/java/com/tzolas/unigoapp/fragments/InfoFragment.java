@@ -40,8 +40,13 @@ public class InfoFragment extends Fragment {
         });
 
         btnBus.setOnClickListener(v -> {
-            String url = "https://opendata.euskadi.eus/catalogo/-/moveuskadi-datos-de-la-red-de-transporte-publico-de-euskadi-operadores-horarios-paradas-calendario-tarifas-etc/";
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, new BusFragment())
+                    .commit();
+
+            requireActivity().setTitle("Paradas de bus");
         });
+
     }
 }

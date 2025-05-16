@@ -114,6 +114,8 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
         crearCanalNotificaciones();
         pedirPermisoNotificaciones();
         modoSeleccionado = cargarModoPreferido();
+
+        comprobarUbicacionEnGasteiz();
         return rootView;
     }
 
@@ -169,16 +171,25 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
             if (posicionActual != null) {
                 modoSeleccionado = "transit";
                 guardarModoPreferido(modoSeleccionado);
-                Toast.makeText(getContext(), "Calculando ruta en autobús...", Toast.LENGTH_SHORT).show();
-                calcularRuta(posicionActual, campusAlava, modoSeleccionado);
+                Toast.makeText(getContext(), "Cargando paradas de autobús...", Toast.LENGTH_SHORT).show();
+
+                // Ir al BusFragment directamente
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new BusFragment())
+                        .addToBackStack(null)
+                        .commit();
+                requireActivity().setTitle("Paradas de bus");
             }
 
             if (isFabRotated) {
                 rotateFabClose();
                 isFabRotated = false;
             }
+
             dialog.dismiss();
         });
+
 
         dialog.setOnDismissListener(dialogInterface -> {
             if (isFabRotated) {
@@ -463,4 +474,24 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
             onMapReady(map);
         }
     }
+    private void comprobarUbicacionEnGasteiz() {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                double lat = location.getLatitude();
+                double lon = location.getLongitude();
+
+                boolean dentroGasteiz = lat >= 42.8050 && lat <= 42.8730 && lon >= -2.7150 && lon <= -2.6350;
+
+                if (!dentroGasteiz) {
+                    new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                            .setTitle("Fuera de Vitoria-Gasteiz")
+                            .setMessage("Esta aplicación solo está diseñada para funcionar dentro de Vitoria-Gasteiz.")
+                            .setPositiveButton("Entendido", null)
+                            .setCancelable(false)
+                            .show();
+                }
+            }
+        });
+    }
+
 }

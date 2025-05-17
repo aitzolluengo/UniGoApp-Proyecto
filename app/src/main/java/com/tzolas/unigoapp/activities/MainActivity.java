@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 oscuro ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -78,16 +79,12 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
                 toolbar.setTitle("Inicio");
 
-            } else if (id == R.id.nav_perfil) {
-                showMessage("Perfil");
-                toolbar.setTitle("Perfil");
-
             } else if (id == R.id.nav_ajustes) {
                 startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {
-                showMessage("Sesión cerrada");
-                toolbar.setTitle("UniGo App");
+                logout();
+
 
             } else if (id == R.id.nav_info) {
                 getSupportFragmentManager()
@@ -179,4 +176,16 @@ public class MainActivity extends AppCompatActivity {
     private void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences("UniGoPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();  // O borra solo lo necesario
+        editor.apply();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 }

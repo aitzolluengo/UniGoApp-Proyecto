@@ -76,10 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle("Inicio");
 
             } else if (id == R.id.nav_perfil) {
-                showMessage("Perfil");
-                toolbar.setTitle("Perfil");
-
-            }else if (id == R.id.nav_ajustes) {
+                startActivity(new Intent(this, ProfileActivity.class));
+            }
+            else if (id == R.id.nav_ajustes) {
                     startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {

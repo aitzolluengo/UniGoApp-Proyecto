@@ -59,16 +59,23 @@ public class FavoritosManager {
         call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    if (esFav) favoritosCache.remove(stopId);
-                    else favoritosCache.add(stopId);
+                if (response.isSuccessful() && response.body() != null) {
+                    ServerResponse res = response.body();
+                    if (res.isSuccess()) {
+                        if (esFav) favoritosCache.remove(stopId);
+                        else favoritosCache.add(stopId);
+                    } else {
+                        Toast.makeText(context, "⚠️ Servidor: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "❌ No se pudo actualizar favorito", Toast.LENGTH_SHORT).show();
                 }
-                onFinish.run(); // continuar después del toggle
+                onFinish.run(); // SIEMPRE LLAMAR PARA ACTUALIZAR UI
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Toast.makeText(context, "Error de red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 onFinish.run();
             }
         });

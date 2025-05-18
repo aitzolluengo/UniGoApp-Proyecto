@@ -12,6 +12,11 @@ if (!$userId || !$paradaId) {
 
 $db = connect();
 
+if (!$db) {
+    echo json_encode(["success" => false, "message" => "Error de conexión"]);
+    exit;
+}
+
 $stmt = $db->prepare("DELETE FROM favoritos WHERE user_id = ? AND parada_id = ?");
 $stmt->bind_param("is", $userId, $paradaId);
 
@@ -21,3 +26,5 @@ if ($stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Error al eliminar"]);
 }
 $stmt->close();
+$db->close();
+?>

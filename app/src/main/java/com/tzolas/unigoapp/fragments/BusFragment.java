@@ -203,10 +203,12 @@ public class BusFragment extends Fragment implements OnMapReadyCallback {
 
                     botonFavorito.setOnClickListener(v -> {
                         FavoritosManager.toggleFavorito(requireContext(), userId, stopId, () -> {
-                            dialog.dismiss();
+                            boolean esAhoraFavorita = FavoritosManager.esFavorita(stopId);
+                            botonFavorito.setText(esAhoraFavorita ? "⭐ Quitar de favoritos" : "☆ Añadir a favoritos");
                             Toast.makeText(getContext(), "Actualizado favoritos", Toast.LENGTH_SHORT).show();
                         });
                     });
+
 
                     TextView horariosTextView = new TextView(getContext());
                     horariosTextView.setPadding(16, 16, 16, 16);

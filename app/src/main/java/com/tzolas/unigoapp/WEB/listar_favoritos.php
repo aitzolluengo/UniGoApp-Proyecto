@@ -11,6 +11,11 @@ if (!$userId) {
 
 $db = connect();
 
+if (!$db) {
+    echo json_encode([]);
+    exit;
+}
+
 $stmt = $db->prepare("SELECT parada_id FROM favoritos WHERE user_id = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -24,3 +29,5 @@ while ($row = $result->fetch_assoc()) {
 
 echo json_encode($favoritos);
 $stmt->close();
+$db->close();
+?>

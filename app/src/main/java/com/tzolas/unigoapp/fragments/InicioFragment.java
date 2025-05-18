@@ -424,7 +424,8 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
 
-        map.setMyLocationEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+
 
         // Añadir marcador al campus de Álava
         map.addMarker(new MarkerOptions()
@@ -432,11 +433,15 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
                 .title("Campus de Álava - EHU")
                 .snippet("Destino principal"));
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(campusAlava, 14));
-
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
                 posicionActual = new LatLng(location.getLatitude(), location.getLongitude());
+
+                // Centrar y añadir marcador
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(posicionActual, 15));
+                map.addMarker(new MarkerOptions()
+                        .position(posicionActual)
+                        .title("📍 Estás aquí"));
 
                 Bundle args = getArguments();
                 if (args != null && args.getBoolean("calcular_ruta", false)) {
@@ -444,9 +449,14 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
                     calcularRuta(posicionActual, campusAlava, modoSeleccionado);
                     Toast.makeText(getContext(), "Ruta automática desde widget", Toast.LENGTH_SHORT).show();
                 }
-            }
 
+            } else {
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(campusAlava, 14));
+                Toast.makeText(getContext(), "Ubicación no disponible", Toast.LENGTH_SHORT).show();
+            }
         });
+
+
     }
 
     @Override

@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecciona un modo de transporte"
+        android:text="@string/selecciona_un_modo_de_transporte_bottom"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
@@ -18,7 +18,7 @@
         android:id="@+id/opcion_andar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🚶 A pie"
+        android:text="@string/a_pie"
         android:textSize="16sp"
         android:backgroundTint="@color/fab_acento"
         android:textColor="@android:color/white"
@@ -28,7 +28,7 @@
         android:id="@+id/opcion_bici"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🚴 En bicicleta"
+        android:text="@string/en_bicicleta"
         android:textSize="16sp"
         android:backgroundTint="@color/fab_acento"
         android:textColor="@android:color/white"
@@ -38,7 +38,7 @@
         android:id="@+id/opcion_bus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🚌 En autobús"
+        android:text="@string/en_autobus"
         android:textSize="16sp"
         android:backgroundTint="@color/fab_acento"
         android:textColor="@android:color/white" />

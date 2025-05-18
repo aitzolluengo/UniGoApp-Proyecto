@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UniGoApp</string>
+    <string name="navigation_drawer_open">Open menu</string>
+    <string name="navigation_drawer_close">Close menu</string>
+    <string name="mode_walk">Walking mode</string>
+    <string name="mode_bike">Bicycle mode</string>
+    <string name="mode_bus">Bus mode</string>
+    <string name="google_maps_key">AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4</string>
+    <string name="selecciona_un_modo_de_transporte">Select a mode of transport</string>
+    <string name="a_pie">Walking</string>
+    <string name="en_bicicleta">By bicycle</string>
+    <string name="en_autobus">By bus</string>
+    <string name="bienvenida_inicio">📍 Welcome to UniGo. We help you reach the Álava campus from anywhere in Vitoria-Gasteiz.</string>
+    <string name="modo_oscuro">Dark mode</string>
+    <string name="borrar_preferencias">Clear preferences</string>
+    <string name="modo_preferido">Preferred mode:</string>
+    <string name="ver_lineas_al_campus">View lines to campus</string>
+    <string name="paradas_cercanas_al_campus">Stops near the campus</string>
+    <string name="iniciar_sesion">Log in</string>
+    <string name="contraseña">Password</string>
+    <string name="no_tienes_cuenta">Dont have an account?</string>
+    <string name="registrarse">Sign up</string>
+    <string name="register_title">Create UniGo account</string>
+    <string name="hint_name">Full name</string>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="hint_age">Age</string>
+    <string name="select_profile_picture">Select profile picture</string>
+    <string name="register">Sign up</string>
+    <string name="nombre_del_usuario">User name</string>
+    <string name="ruta_desde_ubicacion_actual">Route from current location</string>
+    <string name="desc_imagen_perfil">User profile picture</string>
+    <string name="titulo_perfil">User profile</string>
+    <string name="hint_nombre">Name</string>
+    <string name="btn_guardar">Save</string>
+    <string name="cerrar_sesion">Log out</string>
+    <string name="sesion_cerrada">Session successfully closed</string>
+    <string name="cambiar_idioma">Change language</string>
+    <string name="idioma_actual">Current language:</string>
+    <string name="selecciona_idioma">Select a language</string>
+    <string name="selecciona_un_modo_de_transporte_bottom">Select a mode of transport</string>
+    <string name="iniciar_sesi_n">Login</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string-array name="transport_options">
+        <item>Walking</item>
+        <item>Bicycle</item>
+        <item>Bus</item>
+    </string-array>
+    <string name="parada">Stop</string>
+    <string name="añadir_a_favoritos">⭐ Add as favourite</string>
+    <string name="dialogo_bicicleta">A bike route has been calculated based on Google Maps.\n\nBike lanes are marked in red.\nUse them whenever possible for a safer route.</string>
+    <string name="ver_paradas_cercanas">🔍 See nearby stops</string>
+    <string name="informaci_n_til_para_moverte_por_vitoria_gasteiz">Useful information for getting around Vitoria-Gasteiz</string>
+    <string name="accede_a_recursos_oficiales_para_planificar_mejor_tu_trayecto_al_campus_de_lava">Access official resources to better plan your trip to the Álava campus.</string>
+    <string name="mapa_de_carriles_bici">Bike lane map</string>
+    <string name="informaci_n_de_transporte_p_blico">Public transportation information</string>
+    <string name="mensaje_bienvenida">📍 Welcome to UniGo. We help you get to the Álava campus from anywhere in Vitoria-Gasteiz.</string>
+    <string name="ir_con_google_maps">Go with Google Maps</string>
+    <string name="foto_de_perfil">Profile photo</string>
+    <string name="l_neas">Lines: </string>
+    <string name="actualizar_ahora">🔄 Update now</string>
+    <string name="ir_al_campus">Go to the campus</string>
+    <string name="pr_ximos">Next: </string>
+    <string name="buscar_rutas_al_campus_desde_aqu">Find routes to campus from here</string>
+    <string name="modo">Mode:</string>
+    <string name="perfil">Profile</string>
+    <string name="inicio">Principle</string>
+    <string name="mapa_bus">Bus map</string>
+    <string name="paradas_favoritas">Favourite stops</string>
+    <string name="informaci_n">Information</string>
+    <string name="ajustes">Settings</string>
+
+
+</resources>

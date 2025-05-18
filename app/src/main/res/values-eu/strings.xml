@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UniGoApp</string>
+    <string name="navigation_drawer_open">Ireki menua</string>
+    <string name="navigation_drawer_close">Itxi menua</string>
+    <string name="mode_walk">Oinezko modua</string>
+    <string name="mode_bike">Bizikleta modua</string>
+    <string name="mode_bus">Autobus modua</string>
+    <string name="google_maps_key">AIzaSyBzIxbSmofOmbHwpqfUkKcRrey2Z5bfwQ4</string>
+    <string name="selecciona_un_modo_de_transporte">Aukeratu garraiobide bat</string>
+    <string name="a_pie">Oinez</string>
+    <string name="en_bicicleta">Bizikletaz</string>
+    <string name="en_autobus">Autobusez</string>
+    <string name="bienvenida_inicio">📍 Ongi etorri UniGora. Gasteizko edozein lekutik Arabako campusera iristen laguntzen dizugu.</string>
+    <string name="modo_oscuro">Gaueko modua</string>
+    <string name="borrar_preferencias">Lehentasunak ezabatu</string>
+    <string name="modo_preferido">Modu hobetsia:</string>
+    <string name="ver_lineas_al_campus">Ikusi campuserako lineak</string>
+    <string name="paradas_cercanas_al_campus">Kampuseko geltoki hurbilenak</string>
+    <string name="iniciar_sesion">Hasi saioa</string>
+    <string name="contraseña">Pasahitza</string>
+    <string name="no_tienes_cuenta">Ez duzu konturik?</string>
+    <string name="registrarse">Erregistratu</string>
+    <string name="register_title">Sortu UniGo kontua</string>
+    <string name="hint_name">Izen-abizenak</string>
+    <string name="hint_email">Helbide elektronikoa</string>
+    <string name="hint_password">Pasahitza</string>
+    <string name="hint_confirm_password">Berretsi pasahitza</string>
+    <string name="hint_age">Adina</string>
+    <string name="select_profile_picture">Aukeratu profilaren argazkia</string>
+    <string name="register">Erregistratu</string>
+    <string name="nombre_del_usuario">Erabiltzailearen izena</string>
+    <string name="ruta_desde_ubicacion_actual">Uneko kokapenetik bidea</string>
+    <string name="desc_imagen_perfil">Erabiltzailearen profilaren irudia</string>
+    <string name="titulo_perfil">Erabiltzailearen profila</string>
+    <string name="hint_nombre">Izena</string>
+    <string name="btn_guardar">Gorde</string>
+    <string name="cerrar_sesion">Saioa itxi</string>
+    <string name="sesion_cerrada">Saioa ondo itxi da</string>
+    <string name="cambiar_idioma">Aldatu hizkuntza</string>
+    <string name="idioma_actual">Uneko hizkuntza:</string>
+    <string name="selecciona_idioma">Aukeratu hizkuntza bat</string>
+    <string name="selecciona_un_modo_de_transporte_bottom">Aukeratu garraiobide bat</string>
+    <string name="iniciar_sesi_n">Hasi sesioa</string>
+    <string name="correo_electr_nico">posta elektronikoa</string>
+    <string-array name="transport_options">
+        <item>Ibiltzen</item>
+        <item>Bizikletaz</item>
+        <item>Autobusez</item>
+    </string-array>
+    <string name="parada">Geltokia</string>
+    <string name="añadir_a_favoritos">⭐ Gehitu gustoko bezala</string>
+    <string name="dialogo_bicicleta">Bizikletentzako ibilbide bat Google Maps-en arabera kalkulatu da.\n\nBidegorriak gorriz markatuta daude.\nAhal den guztietan erabili ibilbide seguruago baterako.</string>
+    <string name="ver_paradas_cercanas">🔍 Gertu dauden geltokiak ikusi</string>
+    <string name="informaci_n_til_para_moverte_por_vitoria_gasteiz">Gasteizen mugitzeko informazio erabilgarria</string>
+    <string name="accede_a_recursos_oficiales_para_planificar_mejor_tu_trayecto_al_campus_de_lava">Sartu baliabide ofizialetan Arabako campuserako ibilbidea hobeto planifikatzeko.</string>
+    <string name="mapa_de_carriles_bici">Bidegorrien mapa</string>
+    <string name="informaci_n_de_transporte_p_blico">Garraio publikoaren informazioa</string>
+    <string name="mensaje_bienvenida">📍Ongi etorri UniGora\nGasteizko edozein tokitatik Arabako campusera iristen lagunduko dizugu.</string>
+    <string name="ir_con_google_maps">Google Maps-ekin joan</string>
+    <string name="foto_de_perfil">Profilaren argazkia</string>
+    <string name="l_neas">Linea:</string>
+    <string name="actualizar_ahora">🔄 Eguneratu orain</string>
+    <string name="ir_al_campus">Kampusera joan</string>
+    <string name="pr_ximos">Hurrengoak: </string>
+    <string name="buscar_rutas_al_campus_desde_aqu">bilatu ibilbideak campusera hemendik</string>
+    <string name="modo">Modu:</string>
+    <string name="perfil">Profila</string>
+    <string name="inicio">Hasiera</string>
+    <string name="mapa_bus">Bus mapa</string>
+    <string name="paradas_favoritas">Geltoki gustokoenak</string>
+    <string name="informaci_n">Informazioa</string>
+    <string name="ajustes">Ezarpenak</string>
+
+
+</resources>

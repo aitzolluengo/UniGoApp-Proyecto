@@ -9,7 +9,7 @@
         android:id="@+id/texto_modo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Modo: "
+        android:text="@string/modo"
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="@android:color/white" />
@@ -18,7 +18,7 @@
         android:id="@+id/boton_abrir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ir al campus"
+        android:text="@string/ir_al_campus"
         android:layout_below="@id/texto_modo"
         android:layout_marginTop="6dp"
         android:background="@android:color/darker_gray"

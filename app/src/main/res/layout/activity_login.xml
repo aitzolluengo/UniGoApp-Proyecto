@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Iniciar sesión"
+            android:text="@string/iniciar_sesi_n"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#2C2C2C"
@@ -22,7 +22,7 @@
 
         <EditText
             android:id="@+id/editTextEmail"
-            android:hint="Correo electrónico"
+            android:hint="@string/correo_electr_nico"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:hint="Contraseña"
+            android:hint="@string/contraseña"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:text="Iniciar sesión"
+            android:text="@string/iniciar_sesi_n"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -49,7 +49,7 @@
             android:textColor="#FFFFFF"/>
 
         <TextView
-            android:text="¿No tienes cuenta?"
+            android:text="@string/no_tienes_cuenta"
             android:textSize="14sp"
             android:textColor="#555555"
             android:layout_marginTop="24dp"
@@ -58,7 +58,7 @@
 
         <Button
             android:id="@+id/btnGoToRegister"
-            android:text="Regístrate"
+            android:text="@string/registrarse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

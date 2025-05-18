@@ -29,30 +29,11 @@
                 android:id="@+id/texto_bienvenida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📍 Bienvenido a UniGo\nTe ayudamos a llegar al campus de Álava desde cualquier punto de Vitoria-Gasteiz."
+                android:text="@string/mensaje_bienvenida"
                 android:textSize="17sp"
                 android:textColor="@color/textPrimary"
                 android:lineSpacingExtra="6dp"
                 android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/btn_ir_andando"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="🚶 Ir andando al campus"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/fab_acento"
-                android:elevation="4dp"
-                android:layout_gravity="center_horizontal" />
-            <Button
-                android:id="@+id/btn_ver_perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Ver perfil"
-                android:layout_gravity="center_horizontal" />
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

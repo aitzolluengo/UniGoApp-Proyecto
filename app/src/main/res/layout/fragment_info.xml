@@ -14,7 +14,7 @@
             android:id="@+id/titulo_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Información útil para moverte por Vitoria-Gasteiz"
+            android:text="@string/informaci_n_til_para_moverte_por_vitoria_gasteiz"
             android:textSize="20sp"
             android:textStyle="bold"
             android:paddingBottom="12dp" />
@@ -22,20 +22,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accede a recursos oficiales para planificar mejor tu trayecto al campus de Álava." />
+            android:text="@string/accede_a_recursos_oficiales_para_planificar_mejor_tu_trayecto_al_campus_de_lava" />
 
         <Button
             android:id="@+id/btn_bici_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mapa de carriles bici"
+            android:text="@string/mapa_de_carriles_bici"
             android:layout_marginTop="16dp" />
 
         <Button
             android:id="@+id/btn_bus_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Información de transporte público"
+            android:text="@string/informaci_n_de_transporte_p_blico"
             android:layout_marginTop="8dp" />
 
     </LinearLayout>

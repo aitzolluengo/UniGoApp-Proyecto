@@ -9,7 +9,7 @@
         android:id="@+id/boton_paradas_cercanas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🔍 Ver paradas cercanas"
+        android:text="@string/ver_paradas_cercanas"
         android:layout_gravity="top"
         android:padding="16dp"
         style="@style/Widget.Material3.Button.OutlinedButton"
@@ -32,6 +32,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_directions_bus"
-        android:contentDescription="Buscar rutas al campus desde aquí" />
+        android:contentDescription="@string/buscar_rutas_al_campus_desde_aqu" />
 
 </FrameLayout>

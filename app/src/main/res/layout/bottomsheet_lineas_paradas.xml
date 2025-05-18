@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/titulo_parada"
-        android:text="Parada"
+        android:text="@string/parada"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"
@@ -24,7 +24,7 @@
         android:id="@+id/boton_favorito"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="⭐ Añadir a favoritos"
+        android:text="@string/añadir_a_favoritos"
         android:layout_marginTop="8dp"/>
 
 

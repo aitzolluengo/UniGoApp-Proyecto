@@ -10,7 +10,7 @@
         android:id="@+id/widget_parada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Parada: ..."
+        android:text="@string/parada"
         android:textStyle="bold"
         android:textSize="16sp" />
 
@@ -18,20 +18,20 @@
         android:id="@+id/widget_lineas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Líneas: ..."
+        android:text="@string/l_neas"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/widget_horarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Próximos: ..."
+        android:text="@string/pr_ximos"
         android:textSize="12sp" />
 
     <Button
         android:id="@+id/btn_actualizar_widget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="🔄 Actualizar ahora" />
+        android:text="@string/actualizar_ahora" />
 
 </LinearLayout>

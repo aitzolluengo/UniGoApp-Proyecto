@@ -18,7 +18,7 @@
         android:id="@+id/texto_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Se ha calculado una ruta en bici según Google Maps.\n\nLos carriles bici están marcados en rojo.\nÚsalos siempre que sea posible para una ruta más segura."
+        android:text="@string/dialogo_bicicleta"
         android:textColor="@color/text_dialog"
         android:textSize="16sp" />
 </LinearLayout>

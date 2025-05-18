@@ -78,22 +78,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
         fabTransporte = rootView.findViewById(R.id.fab_transporte);
         cardBienvenida = rootView.findViewById(R.id.card_bienvenida);
 
-        // Botón "Ir andando al campus"
-        Button btnIrAndando = rootView.findViewById(R.id.btn_ir_andando);
-        btnIrAndando.setOnClickListener(v -> {
-            if (cardBienvenida.getVisibility() == View.VISIBLE) {
-                cardBienvenida.setVisibility(View.GONE);
-            }
-
-            if (posicionActual != null) {
-                modoSeleccionado = "walking";
-                guardarModoPreferido(modoSeleccionado);
-                Toast.makeText(getContext(), "Calculando ruta a pie...", Toast.LENGTH_SHORT).show();
-                calcularRuta(posicionActual, campusAlava, modoSeleccionado);
-            } else {
-                Toast.makeText(getContext(), "Esperando a obtener tu ubicación...", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         fabTransporte.setOnClickListener(v -> {
             mostrarBottomSheet();

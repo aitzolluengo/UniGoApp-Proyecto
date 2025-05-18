@@ -90,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle("Inicio");
 
             } else if (id == R.id.nav_perfil) {
-                startActivity(new Intent(this, ProfileActivity.class));
+                Intent intent = new Intent(this, ProfileActivity.class);
+                intent.putExtra("email", getSharedPreferences("user_profile", MODE_PRIVATE).getString("email", ""));
+                startActivity(intent);
+
 
             } else if (id == R.id.nav_ajustes) {
                 startActivity(new Intent(this, SettingsActivity.class));

@@ -166,46 +166,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarParadasFavoritas() {
-        Set<String> favoritos = FavoritosManager.obtenerFavoritos(this);
-        if (favoritos.isEmpty()) {
-            Toast.makeText(this, "No tienes paradas favoritas aún.", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        int userId = getSharedPreferences("auth_prefs", MODE_PRIVATE).getInt("USER_ID", -1);
 
-        Map<String, LatLng> stopCoords = new HashMap<>();
-        Map<String, String> stopNames = GtfsUtils.cargarStopNames(this, stopCoords);
+        FavoritosManager.cargarFavoritos(this, userId, () -> {
+            Set<String> favoritos = FavoritosManager.getCache();  // nuevo método que debes añadir al manager
+            if (favoritos.isEmpty()) {
+                Toast.makeText(this, "No tienes paradas favoritas aún.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        View view = LayoutInflater.from(this).inflate(R.layout.bottomsheet_paradas, null);
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        dialog.setContentView(view);
+            Map<String, LatLng> stopCoords = new HashMap<>();
+            Map<String, String> stopNames = GtfsUtils.cargarStopNames(this, stopCoords);
 
-        TextView titulo = view.findViewById(R.id.titulo_sheet);
-        titulo.setText("⭐ Tus paradas favoritas");
+            View view = LayoutInflater.from(this).inflate(R.layout.bottomsheet_paradas, null);
+            BottomSheetDialog dialog = new BottomSheetDialog(this);
+            dialog.setContentView(view);
 
-        LinearLayout contenedor = view.findViewById(R.id.lista_paradas);
-        contenedor.removeAllViews();
+            TextView titulo = view.findViewById(R.id.titulo_sheet);
+            titulo.setText("⭐ Tus paradas favoritas");
 
-        for (String stopId : favoritos) {
-            if (!stopCoords.containsKey(stopId)) continue;
+            LinearLayout contenedor = view.findViewById(R.id.lista_paradas);
+            contenedor.removeAllViews();
 
-            String nombre = stopNames.getOrDefault(stopId, "Sin nombre");
-            LatLng pos = stopCoords.get(stopId);
+            for (String stopId : favoritos) {
+                if (!stopCoords.containsKey(stopId)) continue;
 
-            View paradaView = LayoutInflater.from(this).inflate(R.layout.item_parada_ruta, contenedor, false);
-            TextView texto = paradaView.findViewById(R.id.info_parada);
-            texto.setText("📍 " + nombre);
+                String nombre = stopNames.getOrDefault(stopId, "Sin nombre");
+                LatLng pos = stopCoords.get(stopId);
 
-            paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
-                String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intent.setPackage("com.google.android.apps.maps");
-                startActivity(intent);
-                dialog.dismiss();
-            });
+                View paradaView = LayoutInflater.from(this).inflate(R.layout.item_parada_ruta, contenedor, false);
+                TextView texto = paradaView.findViewById(R.id.info_parada);
+                texto.setText("📍 " + nombre);
 
-            contenedor.addView(paradaView);
-        }
+                paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
+                    String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setPackage("com.google.android.apps.maps");
+                    startActivity(intent);
+                    dialog.dismiss();
+                });
 
-        dialog.show();
+                contenedor.addView(paradaView);
+            }
+
+            dialog.show();
+        });
     }
 } 

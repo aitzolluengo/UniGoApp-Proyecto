@@ -81,6 +81,9 @@ public class BusFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        int userId = requireContext().getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+                .getInt("USER_ID", -1);
+
         boolean darkMode = (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
 
         if (darkMode) {
@@ -95,136 +98,139 @@ public class BusFragment extends Fragment implements OnMapReadyCallback {
                 Log.e("BusFragment", "No se encontró el archivo de estilo", e);
             }
         }
-        try {
-            BitmapDescriptor iconoBus = BitmapDescriptorFactory.fromBitmap(
-                    Bitmap.createScaledBitmap(
-                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_bus_marker),
-                            96, 96, false
-                    )
-            );
-
-            stopNames = GtfsUtils.cargarStopNames(requireContext(), stopCoords);
-            lineasPorParada = GtfsUtils.cargarLineasPorParada(requireContext());
-            lineasCampus = GtfsUtils.obtenerLineasAlCampus(requireContext());
-
-            for (Map.Entry<String, LatLng> entry : stopCoords.entrySet()) {
-                String stopId = entry.getKey();
-                LatLng pos = entry.getValue();
-                String nombre = stopNames.getOrDefault(stopId, "Sin nombre");
-
-                Marker marker = map.addMarker(new MarkerOptions()
-                        .position(pos)
-                        .title(nombre)
-                        .icon(iconoBus));
-
-                if (marker != null) {
-                    markerStopIds.put(marker, stopId);
-                    nombreToMarker.put(nombre.toLowerCase(), marker); // importante: todo en minúsculas
-                }
-            }
-
-            map.setOnMarkerClickListener(marker -> {
-                String stopId = markerStopIds.get(marker);
-                if (stopId == null) return false;
-
-                Set<String> lineas = lineasPorParada.getOrDefault(stopId, new HashSet<>());
-                List<String> horas = HorarioManager.obtenerProximasHorasConLinea(requireContext(), stopId);
-                SharedPreferences prefs = requireContext().getSharedPreferences("UniGoPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("ultimaParadaNombre", marker.getTitle());
-                editor.putString("ultimaParadaLineas", String.join(", ", lineas));
-                editor.putString("ultimaParadaHorarios", horas.isEmpty() ?
-                        "🕐 No hay buses disponibles hoy." :
-                        "🕐 Próximos buses:\n" + String.join("\n", horas.subList(0, Math.min(3, horas.size())))
+        FavoritosManager.cargarFavoritos(requireContext(), userId, () -> {
+            try {
+                BitmapDescriptor iconoBus = BitmapDescriptorFactory.fromBitmap(
+                        Bitmap.createScaledBitmap(
+                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_bus_marker),
+                                96, 96, false
+                        )
                 );
-                editor.apply();
 
+                stopNames = GtfsUtils.cargarStopNames(requireContext(), stopCoords);
+                lineasPorParada = GtfsUtils.cargarLineasPorParada(requireContext());
+                lineasCampus = GtfsUtils.obtenerLineasAlCampus(requireContext());
 
-                View view = LayoutInflater.from(getContext()).inflate(R.layout.bottomsheet_lineas_paradas, null);
-                BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
-                dialog.setContentView(view);
+                for (Map.Entry<String, LatLng> entry : stopCoords.entrySet()) {
+                    String stopId = entry.getKey();
+                    LatLng pos = entry.getValue();
+                    String nombre = stopNames.getOrDefault(stopId, "Sin nombre");
 
-                TextView titulo = view.findViewById(R.id.titulo_parada);
-                titulo.setText("📍 " + marker.getTitle());
+                    Marker marker = map.addMarker(new MarkerOptions()
+                            .position(pos)
+                            .title(nombre)
+                            .icon(iconoBus));
 
-                LinearLayout contenedor = view.findViewById(R.id.contenedor_lineas);
-                contenedor.removeAllViews();
+                    if (marker != null) {
+                        markerStopIds.put(marker, stopId);
+                        nombreToMarker.put(nombre.toLowerCase(), marker);
+                    }
+                }
 
-                if (lineas.isEmpty()) {
-                    View paradaView = LayoutInflater.from(getContext()).inflate(R.layout.item_parada_ruta, contenedor, false);
-                    TextView texto = paradaView.findViewById(R.id.info_parada);
-                    texto.setText("No hay líneas disponibles para esta parada.");
-                    paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
-                        LatLng pos = marker.getPosition();
-                        String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        intent.setPackage("com.google.android.apps.maps");
-                        startActivity(intent);
-                    });
-                    contenedor.addView(paradaView);
-                } else {
-                    boolean hayCoincidencias = false;
-                    StringBuilder sb = new StringBuilder();
-                    for (String linea : lineas) {
-                        if (lineasCampus.contains(linea)) {
-                            sb.append("✅ ").append(linea).append(" (va al campus)\n");
-                            hayCoincidencias = true;
-                        } else {
-                            sb.append("– ").append(linea).append("\n");
+                map.setOnMarkerClickListener(marker -> {
+                    String stopId = markerStopIds.get(marker);
+                    if (stopId == null) return false;
+
+                    Set<String> lineas = lineasPorParada.getOrDefault(stopId, new HashSet<>());
+                    List<String> horas = HorarioManager.obtenerProximasHorasConLinea(requireContext(), stopId);
+
+                    SharedPreferences prefs = requireContext().getSharedPreferences("UniGoPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("ultimaParadaNombre", marker.getTitle());
+                    editor.putString("ultimaParadaLineas", String.join(", ", lineas));
+                    editor.putString("ultimaParadaHorarios", horas.isEmpty() ?
+                            "🕐 No hay buses disponibles hoy." :
+                            "🕐 Próximos buses:\n" + String.join("\n", horas.subList(0, Math.min(3, horas.size())))
+                    );
+                    editor.apply();
+
+                    View view = LayoutInflater.from(getContext()).inflate(R.layout.bottomsheet_lineas_paradas, null);
+                    BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+                    dialog.setContentView(view);
+
+                    TextView titulo = view.findViewById(R.id.titulo_parada);
+                    titulo.setText("📍 " + marker.getTitle());
+
+                    LinearLayout contenedor = view.findViewById(R.id.contenedor_lineas);
+                    contenedor.removeAllViews();
+
+                    if (lineas.isEmpty()) {
+                        View paradaView = LayoutInflater.from(getContext()).inflate(R.layout.item_parada_ruta, contenedor, false);
+                        TextView texto = paradaView.findViewById(R.id.info_parada);
+                        texto.setText("No hay líneas disponibles para esta parada.");
+                        paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
+                            LatLng pos = marker.getPosition();
+                            String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            intent.setPackage("com.google.android.apps.maps");
+                            startActivity(intent);
+                        });
+                        contenedor.addView(paradaView);
+                    } else {
+                        boolean hayCoincidencias = false;
+                        StringBuilder sb = new StringBuilder();
+                        for (String linea : lineas) {
+                            if (lineasCampus.contains(linea)) {
+                                sb.append("✅ ").append(linea).append(" (va al campus)\n");
+                                hayCoincidencias = true;
+                            } else {
+                                sb.append("– ").append(linea).append("\n");
+                            }
                         }
+                        if (!hayCoincidencias) {
+                            sb.append("\n❌ Ninguna línea desde esta parada va al campus.");
+                        }
+
+                        View paradaView = LayoutInflater.from(getContext()).inflate(R.layout.item_parada_ruta, contenedor, false);
+                        TextView texto = paradaView.findViewById(R.id.info_parada);
+                        texto.setText(sb.toString().trim());
+                        paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
+                            LatLng pos = marker.getPosition();
+                            String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            intent.setPackage("com.google.android.apps.maps");
+                            startActivity(intent);
+                        });
+                        contenedor.addView(paradaView);
                     }
 
-                    if (!hayCoincidencias) {
-                        sb.append("\n❌ Ninguna línea desde esta parada va al campus.");
+                    Button botonFavorito = view.findViewById(R.id.boton_favorito);
+                    if (FavoritosManager.esFavorita(stopId)) {
+                        botonFavorito.setText("⭐ Quitar de favoritos");
+                    } else {
+                        botonFavorito.setText("☆ Añadir a favoritos");
                     }
 
-                    View paradaView = LayoutInflater.from(getContext()).inflate(R.layout.item_parada_ruta, contenedor, false);
-                    TextView texto = paradaView.findViewById(R.id.info_parada);
-                    texto.setText(sb.toString().trim());
-                    paradaView.findViewById(R.id.boton_ir).setOnClickListener(v -> {
-                        LatLng pos = marker.getPosition();
-                        String uri = "google.navigation:q=" + pos.latitude + "," + pos.longitude + "&mode=w";
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        intent.setPackage("com.google.android.apps.maps");
-                        startActivity(intent);
+                    botonFavorito.setOnClickListener(v -> {
+                        FavoritosManager.toggleFavorito(requireContext(), userId, stopId, () -> {
+                            dialog.dismiss();
+                            Toast.makeText(getContext(), "Actualizado favoritos", Toast.LENGTH_SHORT).show();
+                        });
                     });
 
-                    contenedor.addView(paradaView);
-                }
-                Button botonFavorito = view.findViewById(R.id.boton_favorito);
-                if (FavoritosManager.esFavorita(requireContext(), stopId)) {
-                    botonFavorito.setText("⭐ Quitar de favoritos");
-                } else {
-                    botonFavorito.setText("☆ Añadir a favoritos");
-                }
+                    TextView horariosTextView = new TextView(getContext());
+                    horariosTextView.setPadding(16, 16, 16, 16);
 
-                botonFavorito.setOnClickListener(v -> {
-                    FavoritosManager.toggleFavorito(requireContext(), stopId);
-                    dialog.dismiss();
-                    Toast.makeText(getContext(), "Actualizado favoritos", Toast.LENGTH_SHORT).show();
+                    if (horas.isEmpty()) {
+                        horariosTextView.setText("🕐 No hay buses disponibles hoy.");
+                    } else {
+                        horariosTextView.setText("🕐 Próximos buses:\n" + String.join("\n", horas.subList(0, Math.min(3, horas.size()))));
+                    }
+
+                    contenedor.addView(horariosTextView);
+                    dialog.show();
+
+                    return true;
                 });
-                TextView horariosTextView = new TextView(getContext());
-                horariosTextView.setPadding(16, 16, 16, 16);
 
-                if (horas.isEmpty()) {
-                    horariosTextView.setText("🕐 No hay buses disponibles hoy.");
-                } else {
-                    horariosTextView.setText("🕐 Próximos buses:\n" + String.join("\n", horas.subList(0, Math.min(3, horas.size()))));
-                }
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS_ALAVA, 14));
 
-                contenedor.addView(horariosTextView);
+            } catch (Exception e) {
+                Log.e("BUS_FRAGMENT_ERROR", "Error en el mapa", e);
+                Toast.makeText(getContext(), "Error cargando mapa de bus", Toast.LENGTH_LONG).show();
+            }
+        });
 
-                dialog.show();
-
-                return true;
-            });
-
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS_ALAVA, 14));
-
-        } catch (Exception e) {
-            Log.e("BUS_FRAGMENT_ERROR", "Error en el mapa", e);
-            Toast.makeText(getContext(), "Error cargando mapa de bus", Toast.LENGTH_LONG).show();
-        }
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);

@@ -3,6 +3,8 @@ package com.tzolas.unigoapp.api;
 import com.tzolas.unigoapp.model.ServerResponse;
 import com.tzolas.unigoapp.model.User;
 
+import java.util.Set;
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -34,4 +36,23 @@ public interface ApiInterface {
             @Field("transportMode") String transportMode,
             @Field("darkMode") boolean darkMode
     );
+    @FormUrlEncoded
+    @POST("insertar_favorito.php")
+    Call<ServerResponse> insertarFavorito(
+            @Field("user_id") int userId,
+            @Field("parada_id") String paradaId
+    );
+
+    @FormUrlEncoded
+    @POST("eliminar_favorito.php")
+    Call<ServerResponse> eliminarFavorito(
+            @Field("user_id") int userId,
+            @Field("parada_id") String paradaId
+    );
+
+    @GET("listar_favoritos.php")
+    Call<Set<String>> listarFavoritos(
+            @Query("user_id") int userId
+    );
+
 }

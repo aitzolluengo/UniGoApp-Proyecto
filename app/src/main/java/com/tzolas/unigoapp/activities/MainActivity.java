@@ -1,23 +1,25 @@
+// === MainActivity.java ===
 package com.tzolas.unigoapp.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.tzolas.unigoapp.utils.SessionUtils;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -32,6 +34,7 @@ import com.tzolas.unigoapp.fragments.InicioFragment;
 import com.tzolas.unigoapp.fragments.InfoFragment;
 import com.tzolas.unigoapp.utils.FavoritosManager;
 import com.tzolas.unigoapp.utils.GtfsUtils;
+import com.tzolas.unigoapp.utils.SessionUtils;
 import com.tzolas.unigoapp.workers.UbicacionWorker;
 
 import java.util.HashMap;
@@ -48,19 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         SharedPreferences prefs = getSharedPreferences("prefs_unigo", MODE_PRIVATE);
         boolean oscuro = prefs.getBoolean("modo_oscuro", false);
         AppCompatDelegate.setDefaultNightMode(
                 oscuro ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
-        String idioma = prefs.getString("idioma", "es");  // por defecto, español
+        String idioma = prefs.getString("idioma", "es");
         Locale locale = new Locale(idioma);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+        actualizarHeaderUsuario();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
@@ -90,17 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle("Inicio");
 
             } else if (id == R.id.nav_perfil) {
-                Intent intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("email", getSharedPreferences("user_profile", MODE_PRIVATE).getString("email", ""));
-                startActivity(intent);
-
+                startActivity(new Intent(this, ProfileActivity.class));
 
             } else if (id == R.id.nav_ajustes) {
                 startActivity(new Intent(this, SettingsActivity.class));
 
             } else if (id == R.id.nav_logout) {
                 SessionUtils.logout(this);
-
 
             } else if (id == R.id.nav_info) {
                 getSupportFragmentManager()
@@ -124,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // Mostrar InicioFragment por defecto al arrancar
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -133,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setTitle("Inicio");
         }
 
-        // REGISTRAR EL WORKER DE UBICACIÓN (cada 30 minutos)
         PeriodicWorkRequest workRequest =
                 new PeriodicWorkRequest.Builder(UbicacionWorker.class, 15, TimeUnit.MINUTES)
                         .build();
@@ -143,6 +139,30 @@ public class MainActivity extends AppCompatActivity {
                 ExistingPeriodicWorkPolicy.KEEP,
                 workRequest
         );
+    }
+
+    private void actualizarHeaderUsuario() {
+        View headerView = navigationView.getHeaderView(0);
+        TextView nombreTextView = headerView.findViewById(R.id.nav_header_name);
+        ImageView imageView = headerView.findViewById(R.id.nav_header_image);
+
+        SharedPreferences prefs = getSharedPreferences("auth_prefs", MODE_PRIVATE);
+        String nombre = prefs.getString("USER_NAME", "Usuario");
+        String fotoBase64 = prefs.getString("USER_PHOTO", null);
+
+        nombreTextView.setText(nombre);
+
+        if (fotoBase64 != null) {
+            try {
+                byte[] decoded = Base64.decode(fotoBase64, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+                imageView.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            imageView.setImageResource(R.drawable.ic_user);
+        }
     }
 
     private void mostrarParadasFavoritas() {
@@ -188,10 +208,4 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
-    private void showMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-
-}
+} 

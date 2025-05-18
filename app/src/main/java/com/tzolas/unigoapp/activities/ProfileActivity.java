@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.*;
 
@@ -69,8 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardar);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
 
-        prefs = getSharedPreferences("user_profile", MODE_PRIVATE);
-
         emailUsuario = getSharedPreferences("auth_prefs", MODE_PRIVATE)
                 .getString("USER_EMAIL", "prueba2@gmail.com");
 
@@ -81,9 +80,8 @@ public class ProfileActivity extends AppCompatActivity {
             String urlImagen = BASE_URL + "uploads/" + nombreImagen;
             Glide.with(this).load(urlImagen).into(imagePerfil);
         } else {
-            imagePerfil.setImageResource(R.drawable.ic_user); // tu imagen por defecto
+            imagePerfil.setImageResource(R.drawable.ic_user);
         }
-
 
         editTextNombre.setText(prefs.getString("nombre", ""));
         editTextEmail.setText(emailUsuario);
@@ -105,12 +103,19 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         btnGuardar.setOnClickListener(v -> {
+            String nombre = editTextNombre.getText().toString();
+
+            // Guardar en perfil local
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("nombre", editTextNombre.getText().toString());
+            editor.putString("nombre", nombre);
             editor.putString("email", emailUsuario);
             editor.putString("password", editTextPassword.getText().toString());
             editor.putString("transporte", claveModoSeleccionado(spinnerTransporte.getSelectedItem().toString()));
             editor.apply();
+
+            // Guardar en auth_prefs para el Drawer
+            SharedPreferences authPrefs = getSharedPreferences("auth_prefs", MODE_PRIVATE);
+            authPrefs.edit().putString("USER_NAME", editTextNombre.getText().toString()).apply();
 
             if (imagenBitmap != null) {
                 subirImagenComoBase64(imagenBitmap);
@@ -149,11 +154,6 @@ public class ProfileActivity extends AppCompatActivity {
             json.put("imagen", base64);
             json.put("nombre_imagen", nombreImagen);
 
-            Log.d("DEBUG", "email: " + emailUsuario);
-            Log.d("DEBUG", "nombre_imagen: " + nombreImagen);
-            Log.d("DEBUG", "base64 length: " + base64.length());
-            Log.d("DEBUG", "JSON final: " + json.toString());
-
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
                     BASE_URL + "upload_profile_base64.php",
@@ -161,8 +161,18 @@ public class ProfileActivity extends AppCompatActivity {
                     response -> {
                         try {
                             String nombreDevuelto = response.getString("filename");
+
+                            // Guardar ruta en perfil local
                             prefs.edit().putString("profile_pic_filename", nombreDevuelto).apply();
+
+                            // ✅ NUEVO: guardar imagen como base64 en auth_prefs para el Drawer
+                            SharedPreferences authPrefs = getSharedPreferences("auth_prefs", MODE_PRIVATE);
+                            authPrefs.edit().putString("USER_PHOTO", base64).apply();
+
                             Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                             finish();
                         } catch (Exception e) {
                             Toast.makeText(this, "Respuesta sin imagen", Toast.LENGTH_SHORT).show();
@@ -188,7 +198,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String convertirABase64(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        return android.util.Base64.encodeToString(baos.toByteArray(), android.util.Base64.DEFAULT);
+        return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
     }
 
     private String traducirModo(String modo) {

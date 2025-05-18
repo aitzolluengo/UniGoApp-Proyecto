@@ -34,9 +34,13 @@
     <string name="register">Registrarse</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="ruta_desde_ubicaci_n_actual">Ruta desde ubicación actual</string>
-    <string name="parada">Parada: ...</string>
-    <string name="l_neas">Líneas: ...</string>
-    <string name="pr_ximos">Próximos: ...</string>
+    <string name="desc_imagen_perfil">Imagen de perfil del usuario</string>
+    <string name="titulo_perfil">Perfil del Usuario</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="sesion_cerrada">Sesión cerrada</string>
+
 
     <string-array name="study_options">
         <item>Grado</item>

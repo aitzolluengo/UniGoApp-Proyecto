@@ -12,6 +12,8 @@
 
     <color name="card_background">#1E1E1E</color>
 
-
+    <color name="fondoTarjeta">#1E1E1E</color>
+    <color name="textoPrincipal">#FFFFFF</color>
+    <color name="botonGoogleMaps">#3700B3</color>
 
 </resources>

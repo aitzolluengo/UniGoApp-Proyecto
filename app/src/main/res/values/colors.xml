@@ -15,4 +15,10 @@
     <color name="text_dialog">#000000</color>
 
     <color name="card_background">#FFFFFF</color>
+    <color name="fondoTarjeta">#FFFFFF</color>
+    <color name="textoPrincipal">#000000</color>
+
+    <color name="botonGoogleMaps">#BB86FC</color>
+
+
 </resources>
